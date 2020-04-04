@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Organization{% endblock %}
+
+{% block body %}
+    <h1>Organization</h1>
+
+    <table class="table table-striped table-bordered">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ organization.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ organization.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Users</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Password</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in organization.users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>
+                    {% for role in user.role %}
+                        {{ role }} ;
+                    {% endfor %}
+                </td>
+                <td>{{ user.password }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-sm btn-warning" href="{{ path('organization_index') }}">back to list</a>
+
+{% endblock %}

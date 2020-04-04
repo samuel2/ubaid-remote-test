@@ -1,0 +1,77 @@
+{{ form_start(form) }}
+    {{ form_label(form.name, "Name", {'attr': {'class': 'form-label', 'for':'name'}}) }}
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'type':'text', 'id': 'name', 'name': 'name'}}) }}
+
+    {{ form_label(form.description, "Description", {'attr': {'class': 'form-label', 'for':'description'}}) }}
+    {{ form_errors(form.description) }}
+    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'type':'textarea', 'id': 'description', 'name': 'description'}}) }}
+
+    <div class="row">
+        <div class="col-12 pt-4">
+            <h3>{{ form_label(form.users, "Users", {'attr': {'class': 'form-label', 'for':'users'}}) }}</h3>
+            <table id="idTable" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input required name="user_name1" type="text" class="form-control form-control-sm"></td>
+                    <td><input required name="user_role1" type="text" class="form-control form-control-sm"></td>
+                    <td><input required name="user_password1" type="password" class="form-control form-control-sm"></td>
+                    <td><button class="btn btn-sm btn-danger" onclick="removeRowindexN(1)">Remove</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="text" hidden name="user_length" id="tableSize" value="1">
+            <button type="submit" class="btn btn-sm btn-success">{{ button_label|default('Save') }}</button>
+            <button type="button" class="btn btn-sm btn-primary" onclick="insererLigneFin()">Add row</button>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+<script type="application/javascript">
+    function removeRowindexN(nb){
+        var tableau = document.getElementById("idTable");
+        var nbLignes = tableau.rows.length;
+
+        if (nb < 0 || nb > (nbLignes-1)) {
+            alert("Error, valeur incorrecte");
+            return;
+        }
+
+        if (tableau.rows.length) {
+            tableau.deleteRow(nb);
+        }
+    }
+
+    function insererLigneFin(){
+        var cell, ligne;
+
+        var tableau = document.getElementById("idTable");
+        var nbLignes = tableau.rows.length;
+
+        var tableSize = document.getElementById("tableSize");
+        tableSize.value = nbLignes;
+
+        ligne = tableau.insertRow(-1);
+        let row = ligne.rowIndex;
+
+        cell = ligne.insertCell(0);
+        cell.innerHTML = '<input required name="user_name'+nbLignes+'" type="text" class="form-control form-control-sm">';
+
+        cell = ligne.insertCell(1);
+        cell.innerHTML = '<input required name="user_role'+nbLignes+'" type="text" class="form-control form-control-sm">';
+
+        cell = ligne.insertCell(2);
+        cell.innerHTML = '<input required name="user_password'+nbLignes+'" type="password" class="form-control form-control-sm">';
+
+        cell = ligne.insertCell(3);
+        cell.innerHTML = '<button class="btn btn-sm btn-danger" onclick="removeRowindexN('+row+')">Remove</button>';
+    }
+</script>

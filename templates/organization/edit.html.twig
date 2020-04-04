@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Organization{% endblock %}
+
+{% block body %}
+    <h1>Edit Organization</h1>
+
+    {{ include('organization/_update_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-sm btn-warning" href="{{ path('organization_index') }}">back to list</a>
+{% endblock %}
